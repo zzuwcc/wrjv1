@@ -7,8 +7,10 @@ from PolicyCannon import Mappo_Cannon
 from PolicyReconn import Mappo_Reconn
 import sys
 import os
-# sys.path.append("C:/Workspace/WRJ/MACA-2D")
 # from MACA.env.cannon_reconn_hierarical import CannonReconnHieraricalEnv
+
+root_path = os.path.join(os.path.dirname(__file__), '../../../')
+sys.path.append(root_path)
 from MACA.env.radar_reconn_hierarical import RaderReconnHieraricalEnv
 import time
 
@@ -23,7 +25,7 @@ class RunnerMACA:
         torch.manual_seed(self.seed)
 
         self.env = RaderReconnHieraricalEnv(None)
-        self.args.N = self.env.n_ally_reconn
+        self.args.N = self.env.n_ally
         self.args.N_Reconn = self.env.args.env.n_ally_reconn
         self.args.obs_dim = self.env.observation_spaces[0].shape[0]
         self.args.obs_dim_n = [self.args.obs_dim for _ in range(self.args.N)]
@@ -82,13 +84,14 @@ class RunnerMACA:
                 # self.agent_Cannon.save_model(self.env_name, self.number, self.seed, self.update_steps)
                 self.agent_Reconn.save_model(self.env_name, self.number, self.seed, self.update_steps)
 
-        np.save("C:/Workspace/WRJ/MACA-2D/MACA/algorithm/ippo/result/evaluate_reward_mean_record_{}.npy".format(self.number), reward_mean_record)
+        np.save("./result/evaluate_reward_mean_record_{}.npy".format(self.number), reward_mean_record)
 
     
     def run_episode(self, evaluate=False):
         cnt = 0
         episode_reward = 0
         obs_n = self.env.reset()
+        obs_n = [obs for id, obs in obs_n.items()]
         # h_in_act_C = self.agent_Cannon.actor.init_hidden(self.args.N_Cannon)
         # h_in_cri_C = self.agent_Cannon.critic.init_hidden(self.args.N_Cannon)
         h_in_act_R = self.agent_Reconn.actor.init_hidden(self.args.N_Reconn)

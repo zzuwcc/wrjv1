@@ -7,8 +7,9 @@ from PolicyCannon import Mappo_Cannon
 from PolicyReconn import Mappo_Reconn
 import sys
 import os
-sys.path.append("C:/Users/XW/Desktop/MACA-2D")
-from MACA.env.cannon_reconn_hierarical import CannonReconnHieraricalEnv
+# sys.path.append("C:/Users/XW/Desktop/MACA-2D")
+# from MACA.env.cannon_reconn_hierarical import CannonReconnHieraricalEnv
+from MACA.env.radar_reconn_hierarical import RaderReconnHieraricalEnv
 import time
 
 class RunnerMACA:
@@ -21,57 +22,28 @@ class RunnerMACA:
         np.random.seed(self.seed)
         torch.manual_seed(self.seed)
 
-
-        if env_name == "CannonReconnHieraricalEnv":
-            self.env = CannonReconnHieraricalEnv(None)
-            self.args.N = self.env.n_ally
-            self.args.N_Reconn = self.env.args.env.n_ally_reconn
-            self.args.N_Cannon = self.env.args.env.n_ally_cannon
-            self.args.obs_dim = self.env.observation_spaces[0].shape[0]
-            self.args.obs_dim_n = [self.args.obs_dim for _ in range(self.args.N)]
-            self.args.state_dim = np.sum(self.args.obs_dim_n)
-            self.args.action_dim_Reconn = self.env.action_spaces[0].shape[0]
-            self.args.action_dim_Cannon = [self.env.action_spaces[1][0].shape[0],
-                                        self.env.action_spaces[1][1]['attack_target'].n + 1]
-            self.args.actor_input_dim = self.args.obs_dim
-            self.args.critic_input_dim = self.args.state_dim
-            self.args.turn_range = self.env.args.fighter.turn_range
-            if args.add_agent_id:
-                self.args.actor_input_dim_R = self.args.actor_input_dim + self.args.N_Reconn
-                self.args.actor_input_dim_C = self.args.actor_input_dim + self.args.N_Cannon
-            else:
-                self.args.actor_input_dim_R = self.args.actor_input_dim
-                self.args.actor_input_dim_C = self.args.actor_input_dim
-
-            self.agent_Reconn = Mappo_Reconn(self.args)
-            self.agent_Cannon = Mappo_Cannon(self.args)
-            self.replaybuffer_Reconn = ReplaybufferReconn(self.args.batch_size, self.args.episode_length, self.args.N_Reconn, self.args.obs_dim, self.args.state_dim)
-            self.replaybuffer_Cannon = ReplaybufferCannon(self.args.batch_size, self.args.episode_length, self.args.N_Cannon, self.args.obs_dim, self.args.state_dim)
-            self.update_steps = 0
+        self.env = RaderReconnHieraricalEnv(None)
+        self.args.N = self.env.n_ally_reconn
+        self.args.N_Reconn = self.env.args.env.n_ally_recoon
+        self.args.obs_dim = self.env.observation_spaces[0].shape[0]
+        self.args.obs_dim_n = [self.args.obs_dim for _ in range(self.args.N)]
+        self.args.state_dim = np.sum(self.args.obs_dim_n)
+        self.args.action_dim_Reconn = self.env.action_spaces[0].shape[0]
+        # self.args.action_dim_Cannon = [self.env.action_spaces[1][0].shape[0],
+        #                             self.env.action_spaces[1][1]['attack_target'].n + 1]
+        self.args.actor_input_dim = self.args.obs_dim
+        self.args.critic_input_dim = self.args.state_dim
+        self.args.turn_range = self.env.args.fighter.turn_range
+        if args.add_agent_id:
+            self.args.actor_input_dim_R = self.args.actor_input_dim + self.args.N_Reconn
+            # self.args.actor_input_dim_C = self.args.actor_input_dim + self.args.N_Cannon
         else:
-            # TODO SET the config of detect_home_env
-            self.env = DetectHomeEnv(None)
-            self.args.N = self.env.n_ally
-            self.args.N_Reconn = self.env.args.env.n_ally_recoon
-            self.args.obs_dim = self.env.observation_spaces[0].shape[0]
-            self.args.obs_dim_n = [self.args.obs_dim for _ in range(self.args.N)]
-            self.args.state_dim = np.sum(self.args.obs_dim_n)
-            self.args.action_dim_Reconn = self.env.action_spaces[0].shape[0]
-            self.args.action_dim_Cannon = [self.env.action_spaces[1][0].shape[0],
-                                        self.env.action_spaces[1][1]['attack_target'].n + 1]
-            self.args.actor_input_dim = self.args.obs_dim
-            self.args.critic_input_dim = self.args.state_dim
-            self.args.turn_range = self.env.args.fighter.turn_range
-            if args.add_agent_id:
-                self.args.actor_input_dim_R = self.args.actor_input_dim + self.args.N_Reconn
-                self.args.actor_input_dim_C = self.args.actor_input_dim + self.args.N_Cannon
-            else:
-                self.args.actor_input_dim_R = self.args.actor_input_dim
-                self.args.actor_input_dim_C = self.args.actor_input_dim
+            self.args.actor_input_dim_R = self.args.actor_input_dim
+            # self.args.actor_input_dim_C = self.args.actor_input_dim
 
-            self.agent_Reconn = Mappo_Reconn(self.args)
-            self.replaybuffer_Reconn = ReplaybufferReconn(self.args.batch_size, self.args.episode_length, self.args.N_Reconn, self.args.obs_dim, self.args.state_dim)
-            self.update_steps = 0
+        self.agent_Reconn = Mappo_Reconn(self.args)
+        self.replaybuffer_Reconn = ReplaybufferReconn(self.args.batch_size, self.args.episode_length, self.args.N_Reconn, self.args.obs_dim, self.args.state_dim)
+        self.update_steps = 0
 
     def run(self):
         evaluate_times = 0
@@ -97,12 +69,12 @@ class RunnerMACA:
                 print(f'Episode: {self.update_steps}, Reward: {reward_mean}, WinRate: {win_rate}')
 
                 reward_mean_record.append(reward_mean)
-                with open("C:/Workspace/WRJ/MACA-2D/MACA/algorithm/mappo/result/log_{}.txt".format(self.number), "a") as f:
+                with open("./result/log_{}.txt".format(self.number), "a") as f:
                     f.write(f'Episode: {self.update_steps}, Reward: {reward_mean}, WinRate: {win_rate}\n')
                 
                 self.agent_Reconn.save_model(self.env_name, self.number, self.seed, self.update_steps)
         
-        np.save("C:/Workspace/WRJ/MACA-2D/MACA/algorithm/mappo/result/evaluate_reward_mean_record_{}.npy".format(self.number), reward_mean_record)
+        np.save("./result/evaluate_reward_mean_record_{}.npy".format(self.number), reward_mean_record)
 
 
     def run_episode(self, evaluate=False):

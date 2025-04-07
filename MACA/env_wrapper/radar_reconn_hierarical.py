@@ -15,8 +15,11 @@ class RadarReconnHieraricalWrapper():
             obses[str(i+1)] = self._obs_fighter_wrapper(env, ally)
         return obses
 
+    # 统一是字典还是list
     def action_wrapper(self, actions, env):
         encoded_action = []
+        ids = list(range(len(actions)))
+        actions = {str(id + 1): actions[id] for id in ids}
         for i in actions.keys():
             if env.allies[int(i)-1].type == FIGHTER_TYPE['reconnaissance']:
                 encoded_action.append([actions[i], 0])
