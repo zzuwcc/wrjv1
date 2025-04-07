@@ -5,6 +5,7 @@ import pygame.gfxdraw
 import numpy as np
 
 from MACA.fighter.fighter_type import FIGHTER_TYPE
+from MACA.stationary.stationary_type import STATIONARY_TYPE
 
 MAP_SCALE = 1
 class PygameRender():
@@ -35,6 +36,14 @@ class PygameRender():
             (args.render_setting.scale_val, args.render_setting.scale_val))
         self.enemy_missile = pygame.transform.scale(
             pygame.image.load(args.render_setting.enemy_missile_path), 
+            (args.render_setting.scale_val, args.render_setting.scale_val))
+        
+        ## 新加的雷达和军事基地
+        self.enemy_radar = pygame.transform.scale(
+            pygame.image.load(args.render_setting.enemy_radar_path), 
+            (args.render_setting.scale_val, args.render_setting.scale_val))
+        self.enemy_base = pygame.transform.scale(
+            pygame.image.load(args.render_setting.enemy_base_path), 
             (args.render_setting.scale_val, args.render_setting.scale_val))
 
         self.size = args.simulator.map_x_limit * MAP_SCALE, args.simulator.map_y_limit * MAP_SCALE
@@ -118,7 +127,21 @@ class PygameRender():
 
                     if self.draw_fighter_detect_range:
                         pygame.draw.circle(self.screen, (0, 0, 255, 32), (enemy.pos[0] * MAP_SCALE, enemy.pos[1] * MAP_SCALE), self.args.fighter.cannon.detect_range * MAP_SCALE, self.args.render_setting.circle_width)
-            
+                    
+                elif enemy.type == STATIONARY_TYPE['radar']:
+                    enemy_radar = pygame.transform.rotate(self.enemy_radar, 0)
+                    self.screen.blit(enemy_radar, (enemy.pos[0] * MAP_SCALE, enemy.pos[1] * MAP_SCALE))
+
+                    # enemy_base = pygame.transform.rotate(self.enemy_base, 0)
+                    # self.screen.blit(enemy_base, (enemy.base_pos[0] * MAP_SCALE, enemy.base_pos[1] * MAP_SCALE))
+
+                    if self.draw_reconn_detect_range:
+                        pygame.draw.circle(self.screen, (0, 0, 255, 32), (enemy.pos[0] * MAP_SCALE, enemy.pos[1] * MAP_SCALE), self.args.stationary.radar.detect_range * MAP_SCALE, self.args.render_setting.circle_width)
+                
+                elif enemy.type == STATIONARY_TYPE['headquarter']:
+                    enemy_base = pygame.transform.rotate(self.enemy_base, 0)
+                    self.screen.blit(enemy_base, (enemy.pos[0] * MAP_SCALE, enemy.pos[1] * MAP_SCALE))
+
                 else:
                     enemy_missile = pygame.transform.rotate(self.enemy_missile, -enemy.ori*180/np.pi-90)
                     self.screen.blit(enemy_missile, ((enemy.pos[0] - 2) * MAP_SCALE, (enemy.pos[1] - 7.7) * MAP_SCALE))
