@@ -15,14 +15,16 @@ if __name__ == '__main__':
     while not done:
         time.sleep(0.05)
 
-        actions = {
-            '1': [0.0], 
-            '2': [0.0], 
-            '3': [0.0], 
-            '4': [0.0], 
-            '5': [0.0], 
-            '6': [0.0], 
-        }
+        # actions = {
+        #     '1': [0.0], 
+        #     '2': [0.0], 
+        #     '3': [0.0], 
+        #     '4': [0.0], 
+        #     '5': [0.0], 
+        #     '6': [0.0], 
+        # }
+
+        actions = [[0.0], [0.0], [0.0], [0.0], [0.0], [0.0]]
     
         obs, reward, dones, info = env.step(actions)
         env.render(save_pic=True)

@@ -10,40 +10,65 @@ class RadarReconnHieraricalWrapper():
         self.n_enemy = env.n_enemy
 
     def obs_wrapper(self, env):
-        obses = {}
+        # obses = {}
+        # for i, ally in enumerate(env.allies):
+        #     obses[str(i+1)] = self._obs_fighter_wrapper(env, ally)
+        # return obses
+        obses = []
         for i, ally in enumerate(env.allies):
-            obses[str(i+1)] = self._obs_fighter_wrapper(env, ally)
+            obses.append(self._obs_fighter_wrapper(env, ally))
         return obses
 
-    # 统一是字典还是list
     def action_wrapper(self, actions, env):
-        encoded_action = []
-        ids = list(range(len(actions)))
-        actions = {str(id + 1): actions[id] for id in ids}
-        for i in actions.keys():
-            if env.allies[int(i)-1].type == FIGHTER_TYPE['reconnaissance']:
-                encoded_action.append([actions[i], 0])
-            else:
-                is_attack = actions[i][1]['is_attack']
-                attack_target = actions[i][1]['attack_target']
-                if is_attack:
-                    encoded_action.append([actions[i][0], attack_target+1])
-                else:
-                    encoded_action.append([actions[i][0], 0])
+        # encoded_action = []
+        # ids = list(range(len(actions)))
+        # actions = {str(id + 1): actions[id] for id in ids}
+        # for i in actions.keys():
+        #     if env.allies[int(i)-1].type == FIGHTER_TYPE['reconnaissance']:
+        #         encoded_action.append([actions[i], 0])
+        #     else:
+        #         is_attack = actions[i][1]['is_attack']
+        #         attack_target = actions[i][1]['attack_target']
+        #         if is_attack:
+        #             encoded_action.append([actions[i][0], attack_target+1])
+        #         else:
+        #             encoded_action.append([actions[i][0], 0])
 
-        return encoded_action
+        # return encoded_action
+        encoder_action = []
+        for i, action in enumerate(actions):
+            if env.allies[i].type == FIGHTER_TYPE['reconnaissance']:
+                encoder_action.append([action, 0])
+            else:
+                is_attack = action[1]['is_attack']
+                attack_target = action[1]['attack_target']
+                if is_attack:
+                    encoder_action.append([action[0], attack_target+1])
+                else:
+                    encoder_action.append([action[0], 0])
+        return encoder_action
 
     def reward_wrapper(self, env, game_status):
-        rewards = {}
+        # rewards = {}
+        # for ally in env.allies:
+        #     if ally.alive:
+        #         if ally.type == FIGHTER_TYPE['reconnaissance']:
+        #             rewards[str(ally.id)] = self._reconn_reward_wrapper(ally, game_status)
+        #         else:
+        #             rewards[str(ally.id)] = self._cannon_reward_wrapper(ally, game_status)
+        #     else:
+        #         rewards[str(ally.id)] = 0.0
+
+        # return rewards
+        rewards = []
         for ally in env.allies:
             if ally.alive:
                 if ally.type == FIGHTER_TYPE['reconnaissance']:
-                    rewards[str(ally.id)] = self._reconn_reward_wrapper(ally, game_status)
+                    rewards.append(self._reconn_reward_wrapper(ally, game_status))
                 else:
-                    rewards[str(ally.id)] = self._cannon_reward_wrapper(ally, game_status)
+                    rewards.append(self._cannon_reward_wrapper(ally, game_status))
             else:
-                rewards[str(ally.id)] = 0.0
-
+                rewards.append(0.0)
         return rewards
 
     def done_wrapper(self, game_status, cnt):
