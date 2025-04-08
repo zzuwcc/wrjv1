@@ -91,7 +91,7 @@ class RunnerMACA:
         cnt = 0
         episode_reward = 0
         obs_n = self.env.reset()
-        obs_n = [obs for id, obs in obs_n.items()]
+        # obs_n = [obs for id, obs in obs_n.items()]
         # h_in_act_C = self.agent_Cannon.actor.init_hidden(self.args.N_Cannon)
         # h_in_cri_C = self.agent_Cannon.critic.init_hidden(self.args.N_Cannon)
         h_in_act_R = self.agent_Reconn.actor.init_hidden(self.args.N_Reconn)
@@ -111,7 +111,8 @@ class RunnerMACA:
             # AA_C = [[A1_C[i], A2_C[i]] for i in range(A1_C.shape[0])]# [N_Cannon, 2]
             AA_R = [[A_R[i], A2_R[i]] for i in range(A_R.shape[0])]# [N_Reconn, 2]
             # AA = AA_R + AA_C
-            AA = AA_R
+            AA = A2_R
+            print(f"AA:{AA}")
 
             next_obs_n, reward_n, done, info = self.env.step(AA)
             reward_n_Reconn = reward_n[:self.args.N_Reconn]
