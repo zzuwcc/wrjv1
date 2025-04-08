@@ -117,6 +117,6 @@ class RaderReconnHieraricalEnv(MultiAgentEnv):
             }
         }
 
-        infos = {str(i): info for i in range(1, self.n_ally+1)}
-        return infos
+        # infos = {str(i): info for i in range(1, self.n_ally+1)}
+        return info
 
