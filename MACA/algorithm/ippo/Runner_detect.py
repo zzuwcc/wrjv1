@@ -78,7 +78,7 @@ class RunnerMACA:
                 print(f'Episode: {self.update_steps}, Reward: {reward_mean}, WinRate: {win_rate}')
 
                 reward_mean_record.append(reward_mean)
-                with open("C:/Workspace/WRJ/MACA-2D/MACA/algorithm/ippo/result/log_{}.txt".format(self.number), "a") as f:
+                with open("./result/log_{}.txt".format(self.number), "a") as f:
                     f.write(f'Episode: {self.update_steps}, Reward: {episode_reward}. WinRate: {win_rate}\n')
                 
                 # self.agent_Cannon.save_model(self.env_name, self.number, self.seed, self.update_steps)
@@ -112,7 +112,6 @@ class RunnerMACA:
             AA_R = [[A_R[i], A2_R[i]] for i in range(A_R.shape[0])]# [N_Reconn, 2]
             # AA = AA_R + AA_C
             AA = A2_R
-            print(f"AA:{AA}")
 
             next_obs_n, reward_n, done, info = self.env.step(AA)
             reward_n_Reconn = reward_n[:self.args.N_Reconn]
