@@ -157,6 +157,6 @@ if __name__ == '__main__':
     parset.add_argument('--seed', type=int, default=0)
     parset.add_argument('--number', type=int, default=0)
     args = parset.parse_args()
-    runner = RunnerMACA(args, 'CannonReconnHieraricalEnv', number=2, seed=0)
+    runner = RunnerMACA(args, 'RaderReconnHieraricalEnv', number=2, seed=0)
     runner.run()
         
