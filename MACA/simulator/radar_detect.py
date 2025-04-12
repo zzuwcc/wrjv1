@@ -230,6 +230,17 @@ class RadarSimulator():
         game_status['n_alive_ally'] = n_alive_ally
         game_status['n_alive_enemy'] = n_alive_enemy
 
+        # 添加侦察机是否侦测到敌方基地
+        is_detect_home = False
+        for ally in self.allies:
+            for id in ally.detect_enemies:
+                if self.enemies[id-1].type == STATIONARY_TYPE['headquarter']:
+                    is_detect_home = True
+                    break
+            if is_detect_home:
+                break
+        game_status['is_detect_home'] = is_detect_home
+
         return game_status
 
     def _convert_action_to_be_attacked_list(self, fighters, enemy_fighters, actions):
