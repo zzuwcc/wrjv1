@@ -35,15 +35,12 @@ class Radar(BaseStationary):
         # self.pos[1] += bias_y
         if self.flag == 1:
             self.t += self.dt
-            self.t = self.t % 500
+            self.t = self.t % 300
             x = self.t
-            if x > 250:
-                x = 500 - x
-            x += 450
-            if x < self.pivot:
-                y = self.k1 * x + self.b1
-            else:
-                y = self.k2 * x + self.b2
+            if x > 150:
+                x = 300 - x
+            x += 400
+            y = self.k1 * x + self.b1
             self.pos[0] = x
             self.pos[1] = y
 

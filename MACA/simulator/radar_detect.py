@@ -105,20 +105,26 @@ class RadarSimulator():
                 b2 = 0
                 pivot = 0
                 if i == 0:
-                    k1 = 0.5
-                    b1 = -150
-                    k2 = -0.25
-                    b2 = 225
-                    pivot = 500
+                    k1 = -1
+                    b1 = 600
+                    k2 = -1
+                    b2 = 600
+                    pivot = 200
                 elif i == 1:
-                    k1 = -0.25
-                    b1 = 362.5
-                    k2 = 0.5
-                    b2 = -125
-                    pivot = 650
+                    k1 = 1
+                    b1 = -100
+                    k2 = 1
+                    b2 = -300
+                    pivot = 200
                 elif i == 2:
                     flag = 0
-                    pos = np.array([750, 300])
+                    pos = np.array([550, 250])
+                elif i == 3:
+                    flag = 0
+                    pos = np.array([650, 100])
+                elif i == 4:
+                    flag = 0
+                    pos = np.array([650, 400])
                 # self.base_pos = np.array([enemies_radar_x_bias + random.randint(0, 50) - 25, self.enemies_radar_y_resolution*(i+1) + random.randint(0, 50) - 25])
             if enemy.type == STATIONARY_TYPE['headquarter']:
                 pos = np.array([self.args.simulator.map_x_limit - 50, self.args.simulator.map_y_limit/2 + random.randint(0, 100) - 50])
