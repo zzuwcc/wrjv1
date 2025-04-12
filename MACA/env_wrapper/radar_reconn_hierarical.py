@@ -72,7 +72,12 @@ class RadarReconnHieraricalWrapper():
         return rewards
 
     def done_wrapper(self, game_status, cnt):
-        if game_status['n_alive_ally'] == 0 or game_status['n_alive_enemy'] == 0:
+        # if game_status['n_alive_ally'] == 0 or game_status['n_alive_enemy'] == 0:
+        #     return {"__all__": True}
+        # if cnt >= self.args.rl.max_time_step:
+        #     return {"__all__": True}
+        # return {"__all__": False}
+        if game_status['n_alive_ally'] == 0 or game_status['is_detect_home']:
             return {"__all__": True}
         if cnt >= self.args.rl.max_time_step:
             return {"__all__": True}
@@ -217,15 +222,26 @@ class RadarReconnHieraricalWrapper():
         return attack_reward + time_penalty + final_reward
     
     def _reconn_reward_wrapper(self, fighter, game_status):
+        # detect_reward = len(fighter.detect_enemies) * self.args.rl.reward.reconn_detect
+        # time_penalty = float(self.args.rl.reward.time_penalty)
+
+        # final_reward = 0
+        # if game_status['n_alive_ally'] == 0 and game_status['n_alive_enemy'] == 0: # tier
+        #     final_reward = self.args.rl.reward.tier
+        # elif game_status['n_alive_ally'] == 0:
+        #     final_reward = self.args.rl.reward.lose
+        # elif game_status['n_alive_enemy'] == 0:
+        #     final_reward = self.args.rl.reward.win
+        # return detect_reward + time_penalty + final_reward
+
         detect_reward = len(fighter.detect_enemies) * self.args.rl.reward.reconn_detect
         time_penalty = float(self.args.rl.reward.time_penalty)
 
         final_reward = 0
-        if game_status['n_alive_ally'] == 0 and game_status['n_alive_enemy'] == 0: # tier
-            final_reward = self.args.rl.reward.tier
-        elif game_status['n_alive_ally'] == 0:
+        if game_status['n_alive_ally'] == 0:
             final_reward = self.args.rl.reward.lose
-        elif game_status['n_alive_enemy'] == 0:
+        elif game_status['is_detect_home']:
             final_reward = self.args.rl.reward.win
+        
         return detect_reward + time_penalty + final_reward
     
