@@ -111,7 +111,7 @@ class RunnerMACA:
             # AA_C = [[A1_C[i], A2_C[i]] for i in range(A1_C.shape[0])]# [N_Cannon, 2]
             AA_R = [[A_R[i], A2_R[i]] for i in range(A_R.shape[0])]# [N_Reconn, 2]
             # AA = AA_R + AA_C
-            AA = A2_R
+            AA = A_R
 
             next_obs_n, reward_n, done, info = self.env.step(AA)
             reward_n_Reconn = reward_n[:self.args.N_Reconn]
