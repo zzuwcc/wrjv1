@@ -41,10 +41,11 @@ def main(args):
     env_name = "RaderReconnHieraricalEnv"
     number = args.number
     seed = args.seed
-    evaluate_reward_mean_record = np.load('C:/Users/XW/Desktop/workspace/wrjv1/MACA/algorithm/ippo/result/evaluate_reward_mean_record_{}.npy'.format(number))
-    step = np.argmax(evaluate_reward_mean_record) * args.evaluate_cycle
+    # evaluate_reward_mean_record = np.load('./result/evaluate_reward_mean_record_{}.npy'.format(number))
+    # step = np.argmax(evaluate_reward_mean_record) * args.evaluate_cycle
     # print('------------------------------------{}'.format(step))
 
+    step = 128    
     Reconn_policy = Mappo_Reconn(args)
     Reconn_policy.load_model(env_name, number, seed, step)
     # Cannon_policy = Mappo_Cannon(args)
@@ -74,10 +75,12 @@ def main(args):
         done = done['__all__']
         if done:
             break
+    is_win = 0
     if info['win_info'] == 'ally win':
         is_win = 1
     print(f'Total reward: {total_reward}, is_win: {is_win}')
-    gif_generate('C:/Workspace/WRJ/MACA-2D/MACA/algorithm/ippo/result/render_{}.gif'.format(number))
+    
+    gif_generate('./MACA/algorithm/ippo/result/render_{}.gif'.format(number))
 
 if __name__ == '__main__':
     parset = argparse.ArgumentParser()
