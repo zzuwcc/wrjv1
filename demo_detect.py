@@ -24,7 +24,8 @@ if __name__ == '__main__':
         #     '6': [0.0], 
         # }
 
-        actions = [[0.0], [0.0], [0.0], [0.0], [0.0], [0.0]]
+        # TODO: 和param中侦察机个数一致
+        actions = [[0.0], [0.0], [0.0], [0.0]]
     
         obs, reward, dones, info = env.step(actions)
         env.render(save_pic=True)
