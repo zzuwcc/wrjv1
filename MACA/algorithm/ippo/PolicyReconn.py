@@ -134,10 +134,10 @@ class Mappo_Reconn:
                 self.ac_optimizer.step()
                     
     def save_model(self, env_name, number, seed, total_steps):
-        torch.save(self.actor.state_dict(), "./model/Reconn_actor_env_{}_number_{}_seed_{}_step_{}k.pth".format(env_name, number, seed, int(total_steps)))
+        torch.save(self.actor.state_dict(), "./MACA/algorithm/ippo/model/Reconn_actor_env_{}_number_{}_seed_{}_step_{}k.pth".format(env_name, number, seed, int(total_steps)))
 
     def load_model(self, env_name, number, seed, step):
-        self.actor.load_state_dict(torch.load("./model/Reconn_actor_env_{}_number_{}_seed_{}_step_{}k.pth".format(env_name, number, seed, step)))
+        self.actor.load_state_dict(torch.load("./MACA/algorithm/ippo/model/Reconn_actor_env_{}_number_{}_seed_{}_step_{}k.pth".format(env_name, number, seed, step)))
 
 
 
