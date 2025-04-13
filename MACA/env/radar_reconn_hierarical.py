@@ -101,11 +101,15 @@ class RaderReconnHieraricalEnv(MultiAgentEnv):
         
     def _get_info(self,):
         win_info = 'game going'
-        if self.game_status['n_alive_ally'] == 0 and self.game_status['n_alive_enemy'] == 0:
-            win_info = 'tier'
-        elif self.game_status['n_alive_ally'] == 0:
+        # if self.game_status['n_alive_ally'] == 0 and self.game_status['n_alive_enemy'] == 0:
+        #     win_info = 'tier'
+        # elif self.game_status['n_alive_ally'] == 0:
+        #     win_info = 'enemy win'
+        # elif self.game_status['n_alive_enemy'] == 0:
+        #     win_info = 'ally win'
+        if self.game_status['n_alive_ally'] == 0:
             win_info = 'enemy win'
-        elif self.game_status['n_alive_enemy'] == 0:
+        elif self.game_status['is_detect_home']:
             win_info = 'ally win'
 
         info = {
