@@ -41,11 +41,22 @@ def main(args):
     env_name = "RaderReconnHieraricalEnv"
     number = args.number
     seed = args.seed
-    # evaluate_reward_mean_record = np.load('./result/evaluate_reward_mean_record_{}.npy'.format(number))
-    # step = np.argmax(evaluate_reward_mean_record) * args.evaluate_cycle
-    # print('------------------------------------{}'.format(step))
 
-    step = 128    
+    step = args.step 
+
+    try: 
+        evaluate_reward_mean_record = np.load('./MACA/algorithm/ippo/result/evaluate_reward_mean_record_{}.npy'.format(number))
+        step = np.argmax(evaluate_reward_mean_record) * args.evaluate_cycle
+        print('------------------------------------{}'.format(step))
+    except FileNotFoundError as e:
+        import traceback
+        print(f"File not found: {e}")
+        traceback.print_exc()
+    except Exception as e:
+        import traceback
+        print(f"An error occurred: {e}")
+        traceback.print_exc()
+
     Reconn_policy = Mappo_Reconn(args)
     Reconn_policy.load_model(env_name, number, seed, step)
     # Cannon_policy = Mappo_Cannon(args)
@@ -100,6 +111,7 @@ if __name__ == '__main__':
     parset.add_argument('--evaluate_nums', type=int, default=10)
     parset.add_argument('--seed', type=int, default=0)
     parset.add_argument('--number', type=int, default=0)
+    parset.add_argument('--step', type=int, default=0)
     args = parset.parse_args()
     main(args)  
     
