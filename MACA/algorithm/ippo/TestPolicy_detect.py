@@ -110,8 +110,8 @@ if __name__ == '__main__':
     parset.add_argument('--add_agent_id', type=bool, default=False)
     parset.add_argument('--evaluate_nums', type=int, default=10)
     parset.add_argument('--seed', type=int, default=0)
-    parset.add_argument('--number', type=int, default=0)
-    parset.add_argument('--step', type=int, default=0)
+    parset.add_argument('--number', type=int, default=2)
+    parset.add_argument('--step', type=int, default=98)
     args = parset.parse_args()
     main(args)  
     
