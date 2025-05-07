@@ -157,7 +157,7 @@ if __name__ == '__main__':
     parset.add_argument('--seed', type=int, default=0)
     parset.add_argument('--number', type=int, default=0)
     args = parset.parse_args()
-    args.number = 2
+    args.number = 9
     args.seed = 0
     runner = RunnerMACA(args, 'RaderReconnHieraricalEnv')
     runner.run()
