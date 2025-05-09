@@ -66,9 +66,9 @@ stationary:
     speed: 40
     radar:
         attack_precent: 1.0
-        detect_range: 60
+        detect_range: 50
         damage: 30
-        damage_range: 60
+        damage_range: 50
         damage_turn_range: 3.14
 
 rl:

@@ -22,6 +22,8 @@ class Radar(BaseStationary):
         self.k2 = base_info['k2']
         self.b2 = base_info['b2']
         self.pivot = base_info['pivot']
+        self.period = base_info['period']
+        self.left = base_info['left']
         self.t = 0
         self.dt = 1.25
         # self.base_pos = base_info['base_pos']
@@ -35,12 +37,15 @@ class Radar(BaseStationary):
         # self.pos[1] += bias_y
         if self.flag == 1:
             self.t += self.dt
-            self.t = self.t % 300
+            self.t = self.t % self.period
             x = self.t
-            if x > 150:
-                x = 300 - x
-            x += 400
-            y = self.k1 * x + self.b1
+            if x > self.period / 2:
+                x = self.period - x
+            x += self.left
+            if x < self.pivot:
+                y = self.k1 * x + self.b1
+            else:
+                y = self.k2 * x + self.b2
             self.pos[0] = x
             self.pos[1] = y
 

@@ -30,3 +30,7 @@ python ./MACA/algorithm/ippo/Runner_detect.py
 - test the ippo model on detect env
 ```shell
 python ./MACA/algorithm/ippo/TestPolicy_detect.py
+```
+#### Modify map configuration
+`./MACA/utils`下有侦察环境的地图配置，以`param_map_{number}`命名
+在`./MACA\env\radar_reconn_hierarical.py`的`args_map = get_args("param_map_1.yaml")`可以切换相应的地图配置

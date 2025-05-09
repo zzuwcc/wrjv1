@@ -1,0 +1,31 @@
+r0: 
+  k1: 1
+  b1: -300
+  k2: -1
+  b2: 700
+  pivot: 500
+  range: 50
+r1:
+  k1: -1
+  b1: 800
+  k2: 1
+  b2: -200
+  pivot: 500
+  range: 50
+r2:
+  flag: 0
+  x: 500
+  y: 75
+  range: 75
+r3:
+  flag: 0
+  x: 500
+  y: 425
+  range: 75
+r4:
+  flag: 0
+  x: 750
+  y: 300
+  range: 75
+period: 200
+left: 450

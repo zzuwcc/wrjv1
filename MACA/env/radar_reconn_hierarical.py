@@ -19,6 +19,9 @@ class RaderReconnHieraricalEnv(MultiAgentEnv):
     def __init__(self, config):
 
         args = get_args("param_detect.yaml")
+        args_map = get_args("param_map_1.yaml")
+        args = merge_args(args, args_map)
+
         if config and 'render' in config:
             args.render = config['render']
         self.args = args
@@ -124,3 +127,7 @@ class RaderReconnHieraricalEnv(MultiAgentEnv):
         # infos = {str(i): info for i in range(1, self.n_ally+1)}
         return info
 
+def merge_args(args1, args2):
+    for key, value in args2.items():
+        args1[key] = value
+    return args1
