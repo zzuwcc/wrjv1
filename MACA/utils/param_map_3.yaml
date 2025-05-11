@@ -21,11 +21,11 @@ r3:
   flag: 0
   x: 650
   y: 100
-  range: 100
+  range: 80
 r4:
   flag: 0
   x: 650
   y: 400
-  range: 100
+  range: 80
 period: 300
 left: 400

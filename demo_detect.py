@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
         step += 1
         total_damage += sum([item[1] for item in info['ally_damage'].items()])
-    gif_generate('demo_detect_1.gif')
+    gif_generate('demo_detect_3.gif')
     print(f'total damage: {total_damage}')
 
         
