@@ -15,15 +15,31 @@ if __name__ == '__main__':
     while not done:
         time.sleep(0.05)
 
+        # actions = {
+        #     '1': [0.0], 
+        #     '2': [0.0], 
+        #     '3': [0.0, {'is_attack': 1, 'attack_target': 2}], 
+        #     '4': [0.0, {'is_attack': 1, 'attack_target': 2}], 
+        #     '5': [0.0, {'is_attack': 1, 'attack_target': 2}], 
+        #     '6': [0.0, {'is_attack': 1, 'attack_target': 2}], 
+        #     '7': [0.0, {'is_attack': 1, 'attack_target': 2}]
+        # }
+
+        # actions = {
+        #     '1': [0.0], 
+        #     '2': [0.0], 
+        #     '3': [0.0, {'is_attack': 1, 'attack_target': 2}], 
+        #     '4': [0.0, {'is_attack': 1, 'attack_target': 2}], 
+        #     '5': [0.0, {'is_attack': 1, 'attack_target': 2}], 
+        #     '6': [0.0, {'is_attack': 1, 'attack_target': 2}], 
+        # }
         actions = {
             '1': [0.0], 
-            '2': [0.0], 
+            '2': [0.0, {'is_attack': 1, 'attack_target': 2}], 
             '3': [0.0, {'is_attack': 1, 'attack_target': 2}], 
             '4': [0.0, {'is_attack': 1, 'attack_target': 2}], 
-            '5': [0.0, {'is_attack': 1, 'attack_target': 2}], 
-            '6': [0.0, {'is_attack': 1, 'attack_target': 2}], 
-            '7': [0.0, {'is_attack': 1, 'attack_target': 2}]
         }
+
     
         obs, reward, dones, info = env.step(actions)
         env.render(save_pic=True)

@@ -8,6 +8,8 @@ render_setting:
     enemy_cannon_path: "./MACA/render/resources/fighter-blue-20.png"
     enemy_reconn_path: "./MACA/render/resources/fighter-blue-20.png"
     enemy_missile_path: "./MACA/render/resources/detector-blue-20.png"
+    enemy_radar_path: "./MACA/render/resources/radar.png"
+    enemy_base_path: "./MACA/render/resources/base_b.png"
 
     scale_val: 14
 
