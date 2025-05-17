@@ -57,7 +57,7 @@ fighter:
         damage_range: 150
         damage_turn_range: 3.14
     reconnaissance:
-        detect_range: 70
+        detect_range: 80
         damage: 0
         damage_range: 0
         damage_turn_range: 0

@@ -95,7 +95,7 @@ def main(args):
 
 if __name__ == '__main__':
     parset = argparse.ArgumentParser()
-    parset.add_argument('--total_steps', type=int, default=100)
+    parset.add_argument('--total_steps', type=int, default=200)
     parset.add_argument('--batch_size', type=int, default=32)
     parset.add_argument('--episode_length', type=int, default=600)
     parset.add_argument('--gamma', type=float, default=0.99)
@@ -110,7 +110,7 @@ if __name__ == '__main__':
     parset.add_argument('--add_agent_id', type=bool, default=False)
     parset.add_argument('--evaluate_nums', type=int, default=10)
     parset.add_argument('--seed', type=int, default=0)
-    parset.add_argument('--number', type=int, default=14)
+    parset.add_argument('--number', type=int, default=15)
     parset.add_argument('--step', type=int, default=90)
     args = parset.parse_args()
     main(args)  
