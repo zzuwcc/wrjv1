@@ -23,7 +23,7 @@ def dict2obj(dictObj):
     return d
 
 
-def get_args(config_path):
+def get_args(config_path = None):
     """返回参数
     """
     if config_path is None:
