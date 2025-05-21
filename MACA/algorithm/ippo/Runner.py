@@ -7,12 +7,14 @@ from PolicyCannon import Mappo_Cannon
 from PolicyReconn import Mappo_Reconn
 import sys
 import os
-sys.path.append("C:/Workspace/WRJ/MACA-2D")
+
+root_path = os.path.join(os.path.dirname(__file__), '../../../')
+sys.path.append(root_path)
 from MACA.env.cannon_reconn_hierarical import CannonReconnHieraricalEnv
 import time
 
 class RunnerMACA:
-    def __init__(self, args, env_name, number, seed = 0):
+    def __init__(self, args, env_name):
         self.args = args
         self.env_name = env_name
         self.number = args.number
@@ -76,13 +78,16 @@ class RunnerMACA:
                 print(f'Episode: {self.update_steps}, Reward: {reward_mean}, WinRate: {win_rate}')
 
                 reward_mean_record.append(reward_mean)
-                with open("C:/Workspace/WRJ/MACA-2D/MACA/algorithm/ippo/result/log_{}.txt".format(self.number), "a") as f:
+                reward_record_dir = f"./MACA/algorithm/ippo/result/{self.env_name}"
+                if not os.path.exists(reward_record_dir):
+                    os.makedirs(reward_record_dir)
+                with open(os.path.join(reward_record_dir, f"log_{self.number}.txt"), "a") as f:
                     f.write(f'Episode: {self.update_steps}, Reward: {episode_reward}. WinRate: {win_rate}\n')
                 
                 self.agent_Cannon.save_model(self.env_name, self.number, self.seed, self.update_steps)
                 self.agent_Reconn.save_model(self.env_name, self.number, self.seed, self.update_steps)
 
-        np.save("C:/Workspace/WRJ/MACA-2D/MACA/algorithm/ippo/result/evaluate_reward_mean_record_{}.npy".format(self.number), reward_mean_record)
+        np.save(os.path.join(reward_record_dir, "evaluate_reward_mean_record_{}.npy".format(self.number)), reward_mean_record)
 
     
     def run_episode(self, evaluate=False):
@@ -153,6 +158,8 @@ if __name__ == '__main__':
     parset.add_argument('--seed', type=int, default=0)
     parset.add_argument('--number', type=int, default=0)
     args = parset.parse_args()
-    runner = RunnerMACA(args, 'CannonReconnHieraricalEnv', number=2, seed=0)
+    args.number = 2
+    args.seed = 0
+    runner = RunnerMACA(args, 'CannonReconnHieraricalEnv')
     runner.run()
         
