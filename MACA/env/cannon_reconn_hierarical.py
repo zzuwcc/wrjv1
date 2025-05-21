@@ -17,7 +17,7 @@ from MACA.env_wrapper.cannon_reconn_hierarical import CannonReconnHieraricalWrap
 class CannonReconnHieraricalEnv(MultiAgentEnv):
     def __init__(self, config):
 
-        args = get_args('param_2.yaml')
+        args = get_args()
         if config and 'render' in config:
             args.render = config['render']
         self.args = args
@@ -50,8 +50,8 @@ class CannonReconnHieraricalEnv(MultiAgentEnv):
 
         # RL wrapper
         self.observation_spaces = [
-            Box(low=-999.9, high=999.9, shape=(6+(self.n_ally+self.n_enemy-1)*6,), dtype=np.float),
-            Box(low=-999.9, high=999.9, shape=(6+(self.n_ally+self.n_enemy-1)*6,), dtype=np.float)
+            Box(low=-999.9, high=999.9, shape=(6+(self.n_ally+self.n_enemy-1)*6,), dtype=np.float64),
+            Box(low=-999.9, high=999.9, shape=(6+(self.n_ally+self.n_enemy-1)*6,), dtype=np.float64)
         ]
         self.action_spaces = [
             Box(low=-self.args.fighter.turn_range, 
@@ -76,8 +76,9 @@ class CannonReconnHieraricalEnv(MultiAgentEnv):
         return self._get_obs()
 
     def step(self, actions):
-        encoded_actions = self.env_wrapper.action_wrapper(actions, self.simulator)
-        self.game_status = self.simulator.step(encoded_actions)
+        # encoded_actions = self.env_wrapper.action_wrapper(actions, self.simulator)
+        # self.game_status = self.simulator.step(encoded_actions)
+        self.game_status = self.simulator.step(actions)
 
         obs = self._get_obs()
         reward = self._get_reward()
@@ -118,6 +119,6 @@ class CannonReconnHieraricalEnv(MultiAgentEnv):
             }
         }
 
-        infos = {str(i): info for i in range(1, self.n_ally+1)}
-        return infos
+        # infos = {str(i): info for i in range(1, self.n_ally+1)}
+        return info
 
