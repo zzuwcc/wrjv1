@@ -78,13 +78,16 @@ class RunnerMACA:
                 print(f'Episode: {self.update_steps}, Reward: {reward_mean}, WinRate: {win_rate}')
 
                 reward_mean_record.append(reward_mean)
-                with open("./MACA/algorithm/ippo/result/log_{}.txt".format(self.number), "a") as f:
+                reward_record_dir = f"./MACA/algorithm/ippo/result/{self.env_name}"
+                if not os.path.exists(reward_record_dir):
+                    os.makedirs(reward_record_dir)
+                with open(os.path.join(reward_record_dir, f"log_{self.number}.txt"), "a") as f:
                     f.write(f'Episode: {self.update_steps}, Reward: {episode_reward}. WinRate: {win_rate}\n')
                 
                 # self.agent_Cannon.save_model(self.env_name, self.number, self.seed, self.update_steps)
                 self.agent_Reconn.save_model(self.env_name, self.number, self.seed, self.update_steps)
 
-        np.save("./MACA/algorithm/ippo/result/evaluate_reward_mean_record_{}.npy".format(self.number), reward_mean_record)
+        np.save(os.path.join(reward_record_dir, "evaluate_reward_mean_record_{}.npy".format(self.number)), reward_mean_record)
 
     
     def run_episode(self, evaluate=False):
