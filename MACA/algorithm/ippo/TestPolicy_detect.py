@@ -15,8 +15,8 @@ from MACA.env.radar_reconn_hierarical import RaderReconnHieraricalEnv
 from MACA.render.gif_generator import gif_generate
 
 
-def main(args):
-    env = RaderReconnHieraricalEnv({'render':True})
+def main(args, env_name:str):
+    env = RaderReconnHieraricalEnv({'render':True}, args.map_name)
     args.N = env.n_ally
     args.N_Reconn = env.args.env.n_ally_reconn
     # args.N_Cannon = env.args.env.n_ally_cannon
@@ -41,13 +41,12 @@ def main(args):
     env_name = "RaderReconnHieraricalEnv"
     number = args.number
     seed = args.seed
-
     step = args.step 
 
     try: 
-        evaluate_reward_mean_record = np.load('./MACA/algorithm/ippo/result/evaluate_reward_mean_record_{}.npy'.format(number))
+        evaluate_reward_mean_record = np.load(f"./MACA/algorithm/ippo/result/{env_name}/{args.map_name}/evaluate_reward_mean_record_{number}.npy")
         step = np.argmax(evaluate_reward_mean_record) * args.evaluate_cycle
-        print('------------------------------------{}'.format(step))
+        print('----------------the best poilcy is step: {}-----------------'.format(step))
     except FileNotFoundError as e:
         import traceback
         print(f"File not found: {e}")
@@ -58,7 +57,7 @@ def main(args):
         traceback.print_exc()
 
     Reconn_policy = Mappo_Reconn(args)
-    Reconn_policy.load_model(env_name, number, seed, step)
+    Reconn_policy.load_model(env_name, number, seed, step, args.map_name)
     # Cannon_policy = Mappo_Cannon(args)
     # Cannon_policy.load_model(env_name, number, seed, step)
 
@@ -91,7 +90,8 @@ def main(args):
         is_win = 1
     print(f'Total reward: {total_reward}, is_win: {is_win}')
     
-    gif_generate('./MACA/algorithm/ippo/result/render_{}.gif'.format(number))
+    gif_root_path = f"./MACA/algorithm/ippo/result/{env_name}/{args.map_name}"
+    gif_generate(os.path.join(gif_root_path, 'render_{}.gif'.format(number)))
 
 if __name__ == '__main__':
     parset = argparse.ArgumentParser()
@@ -112,8 +112,9 @@ if __name__ == '__main__':
     parset.add_argument('--seed', type=int, default=0)
     parset.add_argument('--number', type=int, default=15)
     parset.add_argument('--step', type=int, default=90)
+    parset.add_argument('--map_name', type=str, default='zc_easy')
     args = parset.parse_args()
-    main(args)  
+    main(args, 'RaderReconnHieraricalEnv')  
     
 
 
