@@ -23,13 +23,13 @@ def dict2obj(dictObj):
     return d
 
 
-def get_args(config_path = None):
+def get_args(map_name = None):
     """返回参数
     """
-    if config_path is None:
+    if map_name is None:
         f = open(os.path.split(os.path.realpath(__file__))[0] + '/param.yaml', 'r', encoding='UTF-8')
     else:
-        f = open(os.path.split(os.path.realpath(__file__))[0] + '/' + config_path, 'r', encoding='UTF-8')
+        f = open(os.path.split(os.path.realpath(__file__))[0] + '/' + map_name + '.yaml', 'r', encoding='UTF-8')
     file_data = f.read()
     f.close()
 
