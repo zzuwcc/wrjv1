@@ -18,13 +18,14 @@ class RunnerMACA:
     def __init__(self, args, env_name):
         self.args = args
         self.env_name = env_name
+        self.args.map_name = args.map_name
         self.number = args.number
         self.seed = args.seed
 
         np.random.seed(self.seed)
         torch.manual_seed(self.seed)
 
-        self.env = RaderReconnHieraricalEnv(None)
+        self.env = RaderReconnHieraricalEnv(None, args.map_name)
         self.args.N = self.env.n_ally
         self.args.N_Reconn = self.env.args.env.n_ally_reconn
         self.args.obs_dim = self.env.observation_spaces[0].shape[0]
@@ -78,14 +79,14 @@ class RunnerMACA:
                 print(f'Episode: {self.update_steps}, Reward: {reward_mean}, WinRate: {win_rate}')
 
                 reward_mean_record.append(reward_mean)
-                reward_record_dir = f"./MACA/algorithm/ippo/result/{self.env_name}"
+                reward_record_dir = f"./MACA/algorithm/ippo/result/{self.env_name}/{self.args.map_name}"
                 if not os.path.exists(reward_record_dir):
                     os.makedirs(reward_record_dir)
                 with open(os.path.join(reward_record_dir, f"log_{self.number}.txt"), "a") as f:
                     f.write(f'Episode: {self.update_steps}, Reward: {episode_reward}. WinRate: {win_rate}\n')
                 
                 # self.agent_Cannon.save_model(self.env_name, self.number, self.seed, self.update_steps)
-                self.agent_Reconn.save_model(self.env_name, self.number, self.seed, self.update_steps)
+                self.agent_Reconn.save_model(self.env_name, self.number, self.seed, self.update_steps, self.map_name)
 
         np.save(os.path.join(reward_record_dir, "evaluate_reward_mean_record_{}.npy".format(self.number)), reward_mean_record)
 
@@ -159,9 +160,9 @@ if __name__ == '__main__':
     parset.add_argument('--evaluate_nums', type=int, default=10)
     parset.add_argument('--seed', type=int, default=0)
     parset.add_argument('--number', type=int, default=0)
+    parset.add_argument('--map_name', type=str, default='zc_easy')
+
     args = parset.parse_args()
-    args.number = 15
-    args.seed = 0
     runner = RunnerMACA(args, 'RaderReconnHieraricalEnv')
     runner.run()
         
