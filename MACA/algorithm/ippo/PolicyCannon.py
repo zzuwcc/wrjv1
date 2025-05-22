@@ -146,7 +146,7 @@ class Mappo_Cannon:
         if not os.path.exists(root_path):
             os.makedirs(root_path)
 
-        torch.save(self.actor.state_dict(), os.path.join("Cannon_actor_env_{}_number_{}_seed_{}_step_{}.pth".format(env_name, number, seed, int(total_steps))))
+        torch.save(self.actor.state_dict(), os.path.join(root_path, "Cannon_actor_env_{}_number_{}_seed_{}_step_{}.pth".format(env_name, number, seed, int(total_steps))))
 
     def load_model(self, env_name, number, seed, step, map_name):
         root_path = f"./MACA/algorithm/ippo/model/{env_name}/{map_name}"
