@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data.sampler import BatchSampler, SequentialSampler
+import os
 
 class Actor(nn.Module):
     def __init__(self, args):
@@ -133,11 +134,15 @@ class Mappo_Reconn:
                 ac_loss.backward()
                 self.ac_optimizer.step()
                     
-    def save_model(self, env_name, number, seed, total_steps):
-        torch.save(self.actor.state_dict(), "./MACA/algorithm/ippo/model/Reconn_actor_env_{}_number_{}_seed_{}_step_{}k.pth".format(env_name, number, seed, int(total_steps)))
+    def save_model(self, env_name, number, seed, total_steps, map_name):
+        root_path = f"./MACA/algorithm/ippo/model/{env_name}/{map_name}"
+        if not os.path.exists(root_path):
+            os.makedirs(root_path)
+        torch.save(self.actor.state_dict(), os.path.join(root_path, "Reconn_actor_env_{}_number_{}_seed_{}_step_{}k.pth".format(env_name, number, seed, int(total_steps))))
 
-    def load_model(self, env_name, number, seed, step):
-        self.actor.load_state_dict(torch.load("./MACA/algorithm/ippo/model/Reconn_actor_env_{}_number_{}_seed_{}_step_{}k.pth".format(env_name, number, seed, step)))
+    def load_model(self, env_name, number, seed, step, map_name):
+        root_path = f"./MACA/algorithm/ippo/model/{env_name}/{map_name}"
+        self.actor.load_state_dict(torch.load(os.path.join(root_path, "Reconn_actor_env_{}_number_{}_seed_{}_step_{}k.pth".format(env_name, number, seed, step))))
 
 
 
