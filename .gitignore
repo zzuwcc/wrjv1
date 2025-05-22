@@ -5,4 +5,5 @@ model/
 # result/
 results/
 *.txt
+*pth
 tmp/
