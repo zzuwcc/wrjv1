@@ -16,10 +16,10 @@ from MACA.utils.setting import get_args
 from MACA.env_wrapper.radar_reconn_hierarical import RadarReconnHieraricalWrapper
 
 class RaderReconnHieraricalEnv(MultiAgentEnv):
-    def __init__(self, config):
+    def __init__(self, config, map_name:str=None):
 
-        args = get_args("param_detect.yaml")
-        args_map = get_args("param_map_3.yaml")
+        args = get_args("param_detect")
+        args_map = get_args(map_name)
         # args_map = get_args("param_map_3.yaml")
 
         args = merge_args(args, args_map)

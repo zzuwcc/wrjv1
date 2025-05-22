@@ -15,9 +15,9 @@ from MACA.utils.setting import get_args
 from MACA.env_wrapper.cannon_reconn_hierarical import CannonReconnHieraricalWrapper
 
 class CannonReconnHieraricalEnv(MultiAgentEnv):
-    def __init__(self, config):
+    def __init__(self, config, map_name:str=None):
 
-        args = get_args()
+        args = get_args(map_name)
         if config and 'render' in config:
             args.render = config['render']
         self.args = args
