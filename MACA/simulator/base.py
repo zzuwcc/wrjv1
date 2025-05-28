@@ -62,7 +62,15 @@ class BaseSimulator():
             enemies_other_x_bias = self.enemies_other_x_bias
         
         # ally initialize
+        ally_reconn_cnt = 0
+        ally_connon_cnt = 0
         for i, ally in enumerate(self.allies):
+
+            if ally.type == FIGHTER_TYPE['reconnaissance']:
+                ally_reconn_cnt += 1
+            
+            if ally.type == FIGHTER_TYPE['cannon']:
+                ally_connon_cnt += 1
 
             # pos initialize
             if ally.type == FIGHTER_TYPE['reconnaissance']:
@@ -81,13 +89,25 @@ class BaseSimulator():
             # spec info
             spec_info = self._get_specifical_fighter_info(ally.type)
 
+            # get custom fighter info
+            if ally.type == FIGHTER_TYPE['reconnaissance']:
+                custom_info = self._get_custom_fighter_info("ally", "reconnaissance", ally_reconn_cnt)
+            elif ally.type == FIGHTER_TYPE['cannon']:
+                custom_info = self._get_custom_fighter_info("ally", "cannon", ally_connon_cnt)
+            else:
+                raise Exception(f'Unknown ally type: {ally.type} !!!')
+    
+            for key, value in custom_info.items():
+                if key in spec_info:
+                    spec_info[key] = value
+
             base_info = {
                 'id': i+1,
                 'side': side,
                 'pos': pos,
                 'ori': ori,
-                'speed': self.args.fighter.speed,
-                'bloods': self.args.fighter.bloods,
+                'speed': custom_info.get('speed', self.args.fighter.speed),
+                'bloods': custom_info.get('bloods', self.args.fighter.bloods),
                 'turn_range': self.args.fighter.turn_range,
                 'map_x_limit': self.args.simulator.map_x_limit,
                 'map_y_limit': self.args.simulator.map_y_limit,
@@ -96,6 +116,7 @@ class BaseSimulator():
                 'damage_range': spec_info['damage_range'],
                 'damage_turn_range': spec_info['damage_turn_range'],
             }
+            
 
             # initialize
             ally.initialize(base_info)
@@ -309,6 +330,24 @@ class BaseSimulator():
         else:
             raise Exception(f'Unknown fighter_type: {fighter_type} !!!')
         return spec_info
+    
+    def _get_custom_fighter_info(self, side:str, fighter_type:str, idx:int):
+        """获取自定义无人机配置"""
+        custom_config = {}
+
+        # if not hasattr(self.args, 'custom_fighter') or \
+        #     not hasattr(self.args.custom_fighter, side) or \
+        #     not hasattr(self.args.custom_fighter[side], fighter_type) or \
+        #     not hasattr(self.args.custom_fighter[side][fighter_type], str(idx)):
+        #     return custom_config
+        try:
+            for key, value in self.args.custom_fighter[side][fighter_type][str(idx)].items():
+                custom_config[key] = value
+        except Exception as e:
+            custom_config = {}
+        return custom_config
+
+        
 
     def _can_attack(self, fighter, be_attacked_fighter):
         in_attack_distance_range = self._calc_distance(fighter, be_attacked_fighter) <= fighter.damage_range
