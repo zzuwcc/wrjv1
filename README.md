@@ -44,7 +44,7 @@ python ./MACA/algorithm/ippo/Runner.py --total_steps 200 --number 0 --map_name "
 
 - test the ippo model on battle env
 ```shell
-python ./MACA/algorithm/ippo/TestPolicy.py --number 0 --map_name "dz_easy" --step 100
+python ./MACA/algorithm/ippo/TestPolicy.py --number 0 --map_name "dz_easy" --step 100 --test_id 1
 ```
 
 - train the ippo on the detect env
@@ -54,7 +54,7 @@ python ./MACA/algorithm/ippo/Runner_detect.py --total_steps 200 --number 0 --map
 
 - test the ippo on the detect env
 ```shell
-python ./MACA/algorithm/ippo/TestPolicy_detect.py --number 0 --map_name "zc_easy" --step 100
+python ./MACA/algorithm/ippo/TestPolicy_detect.py --number 0 --map_name "zc_easy" --step 100 --test_id 1
 ```
 
 #### Modify map configuration
