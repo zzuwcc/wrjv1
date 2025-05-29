@@ -41,20 +41,20 @@ def main(args, env_name:str):
     env_name = "RaderReconnHieraricalEnv"
     number = args.number
     seed = args.seed
-    step = args.step 
 
     try: 
         evaluate_reward_mean_record = np.load(f"./MACA/algorithm/ippo/result/{env_name}/{args.map_name}/evaluate_reward_mean_record_{number}.npy")
         step = np.argmax(evaluate_reward_mean_record) * args.evaluate_cycle
         print('----------------the best poilcy is step: {}-----------------'.format(step))
     except FileNotFoundError as e:
-        import traceback
         print(f"File not found: {e}")
-        traceback.print_exc()
     except Exception as e:
         import traceback
         print(f"An error occurred: {e}")
         traceback.print_exc()
+    
+    if args.step != -1:
+        step = args.step
 
     Reconn_policy = Mappo_Reconn(args)
     Reconn_policy.load_model(env_name, number, seed, step, args.map_name)
@@ -91,7 +91,7 @@ def main(args, env_name:str):
     print(f'Total reward: {total_reward}, is_win: {is_win}')
     
     gif_root_path = f"./MACA/algorithm/ippo/result/{env_name}/{args.map_name}"
-    gif_generate(os.path.join(gif_root_path, 'render_{}.gif'.format(number)))
+    gif_generate(os.path.join(gif_root_path, 'render_{}.gif'.format(args.test_id)))
 
 if __name__ == '__main__':
     parset = argparse.ArgumentParser()
@@ -111,8 +111,10 @@ if __name__ == '__main__':
     parset.add_argument('--evaluate_nums', type=int, default=10)
     parset.add_argument('--seed', type=int, default=0)
     parset.add_argument('--number', type=int, default=15)
-    parset.add_argument('--step', type=int, default=90)
+    parset.add_argument('--step', type=int, default=-1)
     parset.add_argument('--map_name', type=str, default='zc_easy')
+    parset.add_argument('--test_id', type=int, default=0)
+
     args = parset.parse_args()
     main(args, 'RaderReconnHieraricalEnv')  
     
