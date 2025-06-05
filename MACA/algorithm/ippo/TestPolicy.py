@@ -83,6 +83,8 @@ def main(args, env_name:str):
         done = done['__all__']
         if done:
             break
+    
+    is_win = 0
     if info['win_info'] == 'ally win':
         is_win = 1
     print(f'Total reward: {total_reward}, is_win: {is_win}')
