@@ -1,9 +1,12 @@
 __pycache__/
 *.pyc
 .DS_Store
-model/
+# model/
 # result/
 results/
 *.txt
 *pth
 tmp/
+!MACA/algorithm/ippo/model/CannonReconnHieraricalEnv/dz_easy/Cannon_actor_env_CannonReconnHieraricalEnv_number_0_seed_0_step_86.pth
+!MACA/algorithm/ippo/model/CannonReconnHieraricalEnv/dz_medium_v2/Cannon_actor_env_CannonReconnHieraricalEnv_number_0_seed_0_step_118.pth
+!MACA/algorithm/ippo/model/CannonReconnHieraricalEnv/dz_hard_v2/Cannon_actor_env_CannonReconnHieraricalEnv_number_0_seed_0_step_70.pth
