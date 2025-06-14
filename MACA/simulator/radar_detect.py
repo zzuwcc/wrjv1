@@ -47,7 +47,9 @@ class RadarSimulator():
 
             # pos initialize
             if ally.type == FIGHTER_TYPE['reconnaissance']:
-                pos = np.array([allies_reconnaissance_x_bias, self.allies_reconnaissance_y_resolution*(i+1)])
+                # pos = np.array([allies_reconnaissance_x_bias, self.allies_reconnaissance_y_resolution*(i+1)])
+                pos = np.array([1.0*self.args.fighters[i]['x'], 1.0*self.args.fighters[i]['y']])
+                # print(pos)
 
             # ori initialize
             if is_flip:
@@ -282,6 +284,7 @@ class RadarSimulator():
             # update info
             ally.detect_allies = d_as
             ally.detect_enemies = d_es
+            ally.detect_enemies_cnt = len(d_es)
         
         # enemy
         for enemy in self.enemies:
@@ -297,6 +300,7 @@ class RadarSimulator():
 
             enemy.detect_allies = d_es
             enemy.detect_enemies = d_as
+            enemy.detect_enemies_cnt = len(d_as)
     
     def _share_reconn_detect_to_other(self):
         # ally detect处理

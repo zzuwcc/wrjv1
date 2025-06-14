@@ -77,6 +77,7 @@ class Radar(BaseStationary):
                     attack = self.detect_enemies[0]
                 else:
                     attack = 0
+                # print(f"Radar {self.id} attack {attack} at {self.pos[0]}, {self.pos[1]}")
 
             return [direct, attack]
         return [0, 0]

@@ -16,16 +16,16 @@ r2:
   flag: 0
   x: 550
   y: 250
-  range: 75
+  range: 100
 r3:
   flag: 0
   x: 650
-  y: 100
-  range: 80
+  y: 70
+  range: 70
 r4:
   flag: 0
   x: 650
-  y: 400
-  range: 80
+  y: 430
+  range: 70
 period: 300
 left: 400

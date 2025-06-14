@@ -11,6 +11,8 @@ class ReconnaissanceFighter(BaseFighter):
 
     def initialize(self, base_info):
         BaseFighter.initialize(self, base_info)
+        self.bloods_pre = 100
+        self.detect_enemies_cnt = 0
 
         # 获取目标pos
         if self.side == 0:

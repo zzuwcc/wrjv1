@@ -21,6 +21,8 @@ class RaderReconnHieraricalEnv(MultiAgentEnv):
         args = get_args("param_detect.yaml")
         args_map = get_args("param_map_3.yaml")
         args = merge_args(args, args_map)
+        args_fighter = get_args("param_fighter.yaml")
+        args = merge_args(args, args_fighter)
 
         if config and 'render' in config:
             args.render = config['render']

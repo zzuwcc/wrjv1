@@ -24,6 +24,6 @@ def gif_generate(save_path, duration=0.05):
     imageio.mimsave(save_path, frames, 'GIF', duration=duration)
     
     # delete pics
-    for pic_dir in pic_list:
-        os.remove(pic_dir)
+    # for pic_dir in pic_list:
+    #     os.remove(pic_dir)
 
