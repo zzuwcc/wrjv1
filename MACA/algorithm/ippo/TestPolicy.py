@@ -41,16 +41,16 @@ def main(args, env_name:str):
     number = args.number
     seed = args.seed
 
-    try:
-        evaluate_reward_mean_record = np.load(f"./MACA/algorithm/ippo/result/{env_name}/{args.map_name}/evaluate_reward_mean_record_{number}.npy")
-        step = np.argmax(evaluate_reward_mean_record) * args.evaluate_cycle
-        print('----------------the best poilcy is step: {}-----------------'.format(step))
-    except FileNotFoundError as e:
-        print(f"File not found: {e}")
-    except Exception as e:
-        import traceback
-        print(f"An error occurred: {e}")
-        traceback.print_exc()
+    # try:
+    #     evaluate_reward_mean_record = np.load(f"./MACA/algorithm/ippo/result/{env_name}/{args.map_name}/evaluate_reward_mean_record_{number}.npy")
+    #     step = np.argmax(evaluate_reward_mean_record) * args.evaluate_cycle
+    #     print('----------------the best poilcy is step: {}-----------------'.format(step))
+    # except FileNotFoundError as e:
+    #     print(f"File not found: {e}")
+    # except Exception as e:
+    #     import traceback
+    #     print(f"An error occurred: {e}")
+    #     traceback.print_exc()
     
     if args.step != -1:
         step = args.step
@@ -110,8 +110,8 @@ if __name__ == '__main__':
     parset.add_argument('--evaluate_nums', type=int, default=10)
     parset.add_argument('--seed', type=int, default=0)
     parset.add_argument('--number', type=int, default=0)
-    parset.add_argument('--step', type=int, default=-1)
-    parset.add_argument('--map_name', type=str, default='dz_easy')
+    parset.add_argument('--step', type=int, default=0)
+    parset.add_argument('--map_name', type=str, default='dz_hard_v2')
     parset.add_argument('--test_id', type=int, default=0)
     args = parset.parse_args()
 
