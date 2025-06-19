@@ -38,20 +38,19 @@ def main(args, env_name:str):
         args.actor_input_dim_R = args.actor_input_dim
         # args.actor_input_dim_C = args.actor_input_dim
 
-    env_name = "RaderReconnHieraricalEnv"
     number = args.number
     seed = args.seed
 
-    try: 
-        evaluate_reward_mean_record = np.load(f"./MACA/algorithm/ippo/result/{env_name}/{args.map_name}/evaluate_reward_mean_record_{number}.npy")
-        step = np.argmax(evaluate_reward_mean_record) * args.evaluate_cycle
-        print('----------------the best poilcy is step: {}-----------------'.format(step))
-    except FileNotFoundError as e:
-        print(f"File not found: {e}")
-    except Exception as e:
-        import traceback
-        print(f"An error occurred: {e}")
-        traceback.print_exc()
+    # try: 
+    #     evaluate_reward_mean_record = np.load(f"./MACA/algorithm/ippo/result/{env_name}/{args.map_name}/evaluate_reward_mean_record_{number}.npy")
+    #     step = np.argmax(evaluate_reward_mean_record) * args.evaluate_cycle
+    #     print('----------------the best poilcy is step: {}-----------------'.format(step))
+    # except FileNotFoundError as e:
+    #     print(f"File not found: {e}")
+    # except Exception as e:
+    #     import traceback
+    #     print(f"An error occurred: {e}")
+    #     traceback.print_exc()
     
     if args.step != -1:
         step = args.step
