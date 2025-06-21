@@ -18,11 +18,10 @@ from MACA.env_wrapper.radar_reconn_hierarical import RadarReconnHieraricalWrappe
 class RaderReconnHieraricalEnv(MultiAgentEnv):
     def __init__(self, config, map_name:str=None):
 
-        # args = get_args("param_detect")
         args = get_args(map_name)
-        # args_map = get_args("param_map_3.yaml")
+        args_front = get_args("frontend_params")
 
-        # args = merge_args(args, args_map)
+        args = merge_args(args, args_front)
 
         if config and 'render' in config:
             args.render = config['render']

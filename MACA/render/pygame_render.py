@@ -137,17 +137,18 @@ class PygameRender():
 
                     if self.draw_reconn_detect_range:
                         # pygame.draw.circle(self.screen, (0, 0, 255, 32), (enemy.pos[0] * MAP_SCALE, enemy.pos[1] * MAP_SCALE), self.args.stationary.radar.detect_range * MAP_SCALE, self.args.render_setting.circle_width)
-                        i = enemy.id-1
-                        if i == 0:
-                            rg = self.args.r0.range
-                        elif i == 1:
-                            rg = self.args.r1.range
-                        elif i == 2:
-                            rg = self.args.r2.range
-                        elif i == 3:
-                            rg = self.args.r3.range
-                        elif i == 4:
-                            rg = self.args.r4.range
+                        # i = enemy.id-1
+                        # if i == 0:
+                        #     rg = self.args.r0.range
+                        # elif i == 1:
+                        #     rg = self.args.r1.range
+                        # elif i == 2:
+                        #     rg = self.args.r2.range
+                        # elif i == 3:
+                        #     rg = self.args.r3.range
+                        # elif i == 4:
+                        #     rg = self.args.r4.range
+                        rg = self.args.blue.defenses[str(enemy.id)].radius
                         pygame.draw.circle(self.screen, (0, 0, 255, 32), (enemy.pos[0] * MAP_SCALE, enemy.pos[1] * MAP_SCALE), rg * MAP_SCALE, self.args.render_setting.circle_width)
                 
                 elif enemy.type == STATIONARY_TYPE['headquarter']:

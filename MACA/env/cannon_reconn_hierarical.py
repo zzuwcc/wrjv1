@@ -18,6 +18,10 @@ class CannonReconnHieraricalEnv(MultiAgentEnv):
     def __init__(self, config, map_name:str=None):
 
         args = get_args(map_name)
+        args_front = get_args("frontend_params")
+
+        args = merge_args(args, args_front)
+
         if config and 'render' in config:
             args.render = config['render']
         self.args = args
@@ -121,4 +125,9 @@ class CannonReconnHieraricalEnv(MultiAgentEnv):
 
         # infos = {str(i): info for i in range(1, self.n_ally+1)}
         return info
+
+def merge_args(args1, args2):
+    for key, value in args2.items():
+        args1[key] = value
+    return args1
 
