@@ -1,48 +1,26 @@
 blue:
-  cannons:
+  defenses:
     '1':
-      radius: 60
-      speed: 40
+      radius: 50
     '2':
-      radius: 60
-      speed: 40
+      radius: 50
     '3':
-      radius: 60
-      speed: 40
+      radius: 75
     '4':
-      radius: 60
-      speed: 40
+      radius: 75
     '5':
-      radius: 60
-      speed: 40
-  recons:
-    '1':
-      radius: 200
-      speed: 40
-    '2':
-      radius: 200
-      speed: 40
+      radius: 75
 red:
-  cannons:
-    '1':
-      radius: 60
-      speed: 40
-    '2':
-      radius: 60
-      speed: 40
-    '3':
-      radius: 60
-      speed: 40
-    '4':
-      radius: 60
-      speed: 40
-    '5':
-      radius: 60
-      speed: 40
   recons:
     '1':
-      radius: 200
+      radius: 70
       speed: 40
     '2':
-      radius: 200
+      radius: 70
+      speed: 40
+    '3':
+      radius: 70
+      speed: 40
+    '4':
+      radius: 70
       speed: 40

@@ -236,6 +236,8 @@ class RadarReconnHieraricalWrapper():
 
         detect_reward = len(fighter.detect_enemies) * self.args.rl.reward.reconn_detect
         time_penalty = float(self.args.rl.reward.time_penalty)
+        alive_reward = 0.05 * (fighter.bloods - fighter.bloods_pre)
+        fighter.bloods_pre = fighter.bloods
 
         final_reward = 0
         if game_status['n_alive_ally'] == 0:
@@ -243,5 +245,5 @@ class RadarReconnHieraricalWrapper():
         elif game_status['is_detect_home']:
             final_reward = self.args.rl.reward.win
         
-        return detect_reward + time_penalty + final_reward
+        return detect_reward + time_penalty + final_reward + alive_reward
     

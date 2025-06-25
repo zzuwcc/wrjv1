@@ -5,7 +5,7 @@ from MACA.env.radar_reconn_hierarical import RaderReconnHieraricalEnv
 from MACA.render.gif_generator import gif_generate
 
 if __name__ == '__main__':
-    env = RaderReconnHieraricalEnv({"render": True})
+    env = RaderReconnHieraricalEnv({"render": True}, 'zc_easy')
 
     env.reset()
 
