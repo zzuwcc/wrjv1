@@ -17,6 +17,7 @@ class Radar(BaseStationary):
         # self.current = base_info['current']
         self.flag = base_info['flag']
         self.rad = base_info['rad']
+        self.speed = base_info['speed']
         self.k1 = base_info['k1']
         self.b1 = base_info['b1']
         self.k2 = base_info['k2']
@@ -36,7 +37,7 @@ class Radar(BaseStationary):
         # self.pos[0] += bias_x
         # self.pos[1] += bias_y
         if self.flag == 1:
-            self.t += self.dt
+            self.t += self.dt * self.speed / 40
             self.t = self.t % self.period
             x = self.t
             if x > self.period / 2:

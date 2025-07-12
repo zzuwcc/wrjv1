@@ -47,7 +47,7 @@ class RadarSimulator():
 
             # pos initialize
             if ally.type == FIGHTER_TYPE['reconnaissance']:
-                pos = np.array([allies_reconnaissance_x_bias, self.allies_reconnaissance_y_resolution*(i+1)])
+                pos = np.array([allies_reconnaissance_x_bias, self.allies_reconnaissance_y_resolution*(i+1)]) + np.random.uniform(-1, 1, size=(2)) * self.args.simulator.random_limit
 
             # ori initialize
             if is_flip:
@@ -147,6 +147,7 @@ class RadarSimulator():
                     'id': i+1,
                     'side': side,
                     'pos': pos,
+                    'speed': self.args.stationary.speed,
                     'flag': flag,
                     'k1': k1,
                     'b1': b1,

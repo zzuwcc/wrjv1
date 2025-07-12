@@ -5,22 +5,22 @@ blue:
     '2':
       radius: 50
     '3':
-      radius: 75
+      radius: 90
     '4':
-      radius: 75
+      radius: 90
     '5':
-      radius: 75
+      radius: 90
 red:
   recons:
     '1':
-      radius: 70
+      radius: 85
       speed: 40
     '2':
-      radius: 70
+      radius: 85
       speed: 40
     '3':
-      radius: 70
+      radius: 85
       speed: 40
     '4':
-      radius: 70
+      radius: 85
       speed: 40

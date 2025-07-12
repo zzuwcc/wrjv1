@@ -18,7 +18,7 @@ class RunnerMACA:
     def __init__(self, args, env_name):
         self.args = args
         self.env_name = env_name
-        self.args.map_name = args.map_name
+        self.map_name = args.map_name
         self.number = args.number
         self.seed = args.seed
 
@@ -159,8 +159,8 @@ if __name__ == '__main__':
     parset.add_argument('--add_agent_id', type=bool, default=False)
     parset.add_argument('--evaluate_nums', type=int, default=10)
     parset.add_argument('--seed', type=int, default=0)
-    parset.add_argument('--number', type=int, default=0)
-    parset.add_argument('--map_name', type=str, default='zc_easy')
+    parset.add_argument('--number', type=int, default=7)
+    parset.add_argument('--map_name', type=str, default='zc_hard')
 
     args = parset.parse_args()
     runner = RunnerMACA(args, 'RaderReconnHieraricalEnv')

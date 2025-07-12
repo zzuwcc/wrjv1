@@ -61,7 +61,7 @@ simulator:
   # 地图大小
   map_x_limit: 800 # 至少得大于500
   map_y_limit: 500
-  random_limit: 50
+  random_limit: 25
 
   # normalization
   distance_normal_val: 200
@@ -97,7 +97,7 @@ stationary:
   radar:
     attack_precent: 1.0
     detect_range: 50
-    damage: 30
+    damage: 5
     damage_range: 50
     damage_turn_range: 3.14
 
